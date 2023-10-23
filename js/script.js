@@ -1,17 +1,18 @@
 
 //https://www.cnblogs.com/yjmyzz/p/peerjs-tutorial.html
 
-var msg = document.getElementById("msg_show");
+var msg_show = document.getElementById("msg_show");
 var txtSelfId = document.querySelector("input#txtSelfId");
 var txtTargetId = document.querySelector("input#txtTargetId");
 var txtMsg = document.querySelector("input#txtMsg");
 var btnRegister = document.querySelector("button#btnRegister");
 var btnSend = document.querySelector("button#btnSend");
-
+var myID = document.getElementById("myID");
+var hisID = document.getElementById("hisID");
 
 let peer = null;
 let conn = null;
-
+var status = "";
 //peer连接时，id不允许有中文，所以转换成hashcode数字
 hashCode = function (str) {
     var hash = 0;
@@ -38,29 +39,45 @@ window.onload = function() {
                 return;
             }
             //创建peer实例
-            peer = new Peer(hashCode(txtSelfId.value), connOption);
+            peer = new Peer();
  
             //register成功的回调
             peer.on('open', function (id) {
-                msg.innerHTML = msg.innerHTML += "<div class='align_right'>system : register success " + id + "</div>";
+				console.log(peer.connections);
+				myID.innerHTML = id;
+                msg_show.innerHTML = msg_show.innerHTML += "<div class='align_left'>系統提示 : 連接成功，歡迎加入戰場! " + txtSelfId.value + "</div>";
             });
- 
+			
             peer.on('connection', (conn) => {
+				console.log(peer.connections);
                 //收到对方消息的回调
                 conn.on('data', (data) => {
                     var msg = JSON.parse(data);
-                    msg.innerHTML = msg.innerHTML += "<div class='align_right'>" + msg.from + " : " + msg.body + "</div>";
+					
+					if(confirm(msg.from+"前來挑戰\r\n"+"是否接戰?")){
+						alert("OK");
+					}else{
+						alert("BYE");
+						return;
+					}
+					
+					//console.log(msg);
+                    msg_show.innerHTML = msg_show.innerHTML +=  "<div class='align_left'>" + msg.from + " : " + msg.body + "</div>";
                     if (txtTargetId.value.length == 0) {
-                        txtTargetId.value = msg.from;
+						hisID.innerHTML = "對手暱稱:"+msg.from;
+                        txtTargetId.value = msg.id;
                     }
                 });
             });
+			
+			peer.on('error', function(err) { alert(err)});
+			
         }
     }
 	//发送消息处理
     btnSend.onclick = function () {
         //消息体
-        var message = { "from": txtSelfId.value, "to": txtTargetId.value, "body": txtMsg.value };
+        var message = { "from": txtSelfId.value,"id": myID.innerHTML, "to": txtTargetId.value, "body": txtMsg.value };
 		
         if (!conn) {
             if (txtTargetId.value.length == 0) {
@@ -75,12 +92,14 @@ window.onload = function() {
             }
  
             //创建到对方的连接
-            conn = peer.connect(hashCode(txtTargetId.value));
+            conn = peer.connect(txtTargetId.value);
+			
             conn.on('open', () => {
-				console.log('open');
                 //首次发送消息
                 sendMessage(message);
             });
+			
+			
         }
  
         //发送消息
@@ -94,6 +113,5 @@ window.onload = function() {
 
 sendMessage = function (message) {
     conn.send(JSON.stringify(message));
-    //console.log(message);
-    msg.innerHTML = msg.innerHTML += "<div class='align_left'>" + message.from + " : " + message.body + "</div>";
+    msg_show.innerHTML = msg_show.innerHTML += "<div class='align_right'>" + message.from + " : " + message.body + "</div>";
 }

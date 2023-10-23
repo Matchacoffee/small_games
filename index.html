@@ -22,10 +22,13 @@
 	<div>
 		<label>我方暱稱:</label>
 		<input id = "txtSelfId"></input>
+		<label>我方ID:</label>
+		<label id = "myID"></label>
 		<button id = "btnRegister" class="button" >想跳chacha</button>
 	</div>
 	<div>
-		<label>對手暱稱:</label>
+		<label id = "hisID">對手暱稱:暫無配對</label>
+		<label>對手ID:</label>
 		<input id = "txtTargetId"></input>
 		<label>發言:</label>
 		<input id = "txtMsg"></input>
@@ -34,7 +37,7 @@
 	
 	
 	
-	<label id="msg_show"></label>
+	<div id="msg_show"></div>
 	
 	<script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
     <!-- <script  src="js/1.5.1_dist_peerjs.min.js"></script> -->
