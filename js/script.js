@@ -28,7 +28,7 @@ window.onload = function() {
 	
 	 let connOption = { debug: 3 };
 	
-	
+	//QQ
 	//register处理
     btnRegister.onclick = function () {
         if (!peer) {
