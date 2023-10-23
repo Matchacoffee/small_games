@@ -12,8 +12,32 @@
 		
 	</head>
 	<body >
-
-
+	
+	<div id = "body_panel" style = "overflow-y:auto;" >
+		<div  id = "container" class = "container">
+			<div  style="padding-top:20px" >測試P2P連線</div>
+		</div>
+	</div>
+	
+	<div>
+		<label>我方暱稱:</label>
+		<input id = "txtSelfId"></input>
+		<button id = "btnRegister" class="button" >想跳chacha</button>
+	</div>
+	<div>
+		<label>對手暱稱:</label>
+		<input id = "txtTargetId"></input>
+		<label>發言:</label>
+		<input id = "txtMsg"></input>
+		<button id = "btnSend" class="button" >發送</button>
+	</div>
+	
+	
+	
+	<label id="msg_show"></label>
+	
+	
+    <script  src="js/1.5.1_dist_peerjs.min.js"></script>
 	<script  src="js/script.js?v=002"></script>
 	<script type="text/javascript">
 	/*
