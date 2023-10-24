@@ -13,32 +13,54 @@
 	</head>
 	<body >
 	
-	<div id = "body_panel" style = "overflow-y:auto;" >
-		<div  id = "container" class = "container">
-			<div  style="padding-top:20px" >測試P2P連線</div>
-		</div>
+	<div style="text-align : center;">
+	  <h3>派對咖抹茶</h3>
 	</div>
 	
-	<div>
-		<label>我方暱稱:</label>
+	
+	<div class="flex-align-title" style="text-align : center;max-height:50%;" >
+	<span>
+	
+	<span >
+	    <label>我方暱稱:</label>
 		<input id = "txtSelfId"></input>
+		<br/>
 		<label>我方ID:</label>
 		<label id = "myID"></label>
 		<button id = "btnRegister" class="button" >想跳chacha</button>
-		<button id = "btnTest" class="button" >看看編碼</button>
+		<button id = "btnTest" class="button" style="display:none" >看看編碼</button>
+	</span>
+	<br/>
+	<span id = "opponent" style="display:none" >
+	  <div>
+	    <label id = "hisID">對手暱稱:暫無配對</label>
+	  </div>
+	  <div>
+	    <label>對手ID:</label>
+	    <input id = "txtTargetId" onkeyup="testNum()" maxlength="19" ></input>
+	  </div>
+	  <label>發言  :</label>
+	  <input id = "txtMsg"></input>
+	  <button id = "btnSend" class="button" >發送</button>
+	</span>
+	
+	</span>
+	
+	<div id="msg_show">
+	  <div id = "games" style="text-align: left;display: none;align-items: center;">
+	    模式:
+		<a href = "#" onclick = "playGames(1)"><img src="images/fly3.jpg" class="btn_games" width="100" height="100" alt="1A2B" /></a>
+	    
+	  </div>
 	</div>
-	<div>
-		<label id = "hisID">對手暱稱:暫無配對</label>
-		<label>對手ID:</label>
-		<input id = "txtTargetId"></input>
-		<label>發言:</label>
-		<input id = "txtMsg"></input>
-		<button id = "btnSend" class="button" >發送</button>
 	</div>
+
+ 
+ 
 	
 	
 	
-	<div id="msg_show"></div>
+	
 	
 	<script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
     <!-- <script  src="js/1.5.1_dist_peerjs.min.js"></script> -->

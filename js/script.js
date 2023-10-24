@@ -9,6 +9,7 @@ var btnRegister = document.querySelector("button#btnRegister");
 var btnSend = document.querySelector("button#btnSend");
 var myID = document.getElementById("myID");
 var hisID = document.getElementById("hisID");
+var games = document.getElementById("games");
 
 let peer = null;
 let conn = null;
@@ -51,9 +52,11 @@ window.onload = function() {
  
             //register成功的回调
             peer.on('open', function (id) {
-				console.log(peer.connections);
 				myID.innerHTML = id;
                 msg_show.innerHTML = msg_show.innerHTML += "<div class='align_left'>系統提示 : 連接成功，歡迎加入戰場! " + txtSelfId.value + "</div>";
+				var opponent = document.getElementById("opponent");
+				opponent.style.display = "inline-block";
+				mystatus = "standby";
             });
 			
             peer.on('connection', (conn) => {
@@ -62,15 +65,15 @@ window.onload = function() {
                 conn.on('data', (data) => {
                     var msg = JSON.parse(data);
 					
-					if(mystatus == ""){
-						if(confirm(msg.from+"前來挑戰\r\n"+"是否接戰?")){
+					if(mystatus == "standby"){
+						if(confirm(msg.from+"前來挑戰\r\n「"+msg.body+"」\r\n是否接戰?")){
 							var message = { "from": "抹system茶","id": myID.innerHTML, "to": msg.id, "body": "OK" };
 							send(message);
-							mystatus = "connect";
+							mystatus = "connect_guest";
 						}else{
 							var message = { "from": '抹system茶',"id": myID.innerHTML, "to": msg.id , "body": 'NO' };
 							send(message);
-							mystatus = "";
+							mystatus = "standby";
 							peer.disconnect();
 							console.log(peer.connections);
 							return;
@@ -79,16 +82,33 @@ window.onload = function() {
 					if(mystatus == "try_connect"){
 						if(msg.from == "抹system茶"){
 							if(msg.body == "OK"){
-								mystatus = "connect";
+								mystatus = "connect_host";
+								console.log(games);
+								games.style.display  = "flex";
+								console.log(games);
 								return;
 							}
 							else{
-								mystatus = "";
+								mystatus = "standby";
 								alert("對方已拒絕");
 								return;
 							}
 						}
 					}
+					
+					if(msg.from == "抹system茶"){
+						switch(msg.action){
+							case 'invite':
+							msg_show.innerHTML = msg_show.innerHTML +=  "<div class='align_left'> 戰場進入" + msg.body + " 模式</div>";
+							var message = { "from": '抹system茶',"id": myID.innerHTML, "to": txtTargetId.value, "body": msg.body,"action":'reinvite' };
+							send(message);
+							return;
+							case 'reinvite':
+							msg_show.innerHTML = msg_show.innerHTML +=  "<div class='align_left'> 戰場進入" + msg.body + " 模式</div>";
+							return;
+						}
+					}
+					
 					
 					//console.log(msg);
                     msg_show.innerHTML = msg_show.innerHTML +=  "<div class='align_left'>" + msg.from + " : " + msg.body + "</div>";
@@ -125,7 +145,7 @@ window.onload = function() {
 		
         if (!conn) {
             if (txtTargetId.value.length == 0) {
-                alert("please input target name");
+                alert("輸入想說的話");
                 txtTargetId.focus();
                 return;
             }
@@ -174,7 +194,7 @@ function send(message){
 }
 
 sendMessage = function (message) {
-	if(mystatus == "" && message.from != "抹system茶")
+	if(mystatus == "standby" && message.from != "抹system茶")
 		mystatus = "try_connect";
     conn.send(JSON.stringify(message));
 	if(message.from != "抹system茶")
@@ -183,5 +203,23 @@ sendMessage = function (message) {
 
 function btnTest_click(event){
 	console.log(hashCode(txtSelfId.value));
-
 }
+
+function testNum(){
+	//每四個字塞一個-
+   txtTargetId.value = txtTargetId.value.replace(/\D/g,'').replace(/....(?!$)/g,'$&-');
+}
+
+function playGames(id){
+   switch(id){
+     case 1:
+	   Invite1A2B();
+	 break;
+   }
+}
+
+function Invite1A2B(){
+	var message = { "from": '抹system茶',"id": myID.innerHTML, "to": txtTargetId.value, "body": '1A2B',"action":'invite' };
+	send(message);
+}
+

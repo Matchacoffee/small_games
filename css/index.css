@@ -24,3 +24,7 @@ body {
 .align_left {
   text-align: left;
 }
+.flex-align-title span {
+  text-align: left;
+  display: inline-block;
+}
