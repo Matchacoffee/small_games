@@ -25,6 +25,7 @@
 		<label>我方ID:</label>
 		<label id = "myID"></label>
 		<button id = "btnRegister" class="button" >想跳chacha</button>
+		<button id = "btnTest" class="button" >看看編碼</button>
 	</div>
 	<div>
 		<label id = "hisID">對手暱稱:暫無配對</label>
@@ -43,8 +44,9 @@
     <!-- <script  src="js/1.5.1_dist_peerjs.min.js"></script> -->
 	<script  src="js/script.js?v=003"></script>
 	<script type="text/javascript">
+	document.getElementById("btnTest").addEventListener('click',btnTest_click);
 	/*
-	document.getElementById("all_screen").addEventListener('click',all_screen_click);
+	
 	document.getElementById("hint_guide").addEventListener('click',hint_guide_click);
 	document.getElementById("Handan").addEventListener('click',Handan_click);
 	document.getElementById("create_pool").addEventListener('click',create_pool_click);

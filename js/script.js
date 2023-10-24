@@ -12,9 +12,10 @@ var hisID = document.getElementById("hisID");
 
 let peer = null;
 let conn = null;
-var status = "";
+var mystatus = "";
 //peer连接时，id不允许有中文，所以转换成hashcode数字
 hashCode = function (str) {
+	str =  "派對咖抹茶 " + str;
     var hash = 0;
     if (str.length == 0) return hash;
     for (i = 0; i < str.length; i++) {
@@ -22,7 +23,14 @@ hashCode = function (str) {
         hash = ((hash << 5) - hash) + char;
         hash = hash & hash;
     }
-    return hash;
+	hash = Math.abs(hash);
+	var data = hash.toString().padStart(16, "0"),result = "";
+	for(i = 0;i <= data.length-1;i++){
+		if(i%4 == 0 && i != 0)
+			result += '-';
+		result += data[i];
+	}
+    return result;
 }
 
 window.onload = function() {
@@ -39,7 +47,7 @@ window.onload = function() {
                 return;
             }
             //创建peer实例
-            peer = new Peer();
+            peer = new Peer(hashCode(txtSelfId.value));
  
             //register成功的回调
             peer.on('open', function (id) {
@@ -54,11 +62,32 @@ window.onload = function() {
                 conn.on('data', (data) => {
                     var msg = JSON.parse(data);
 					
-					if(confirm(msg.from+"前來挑戰\r\n"+"是否接戰?")){
-						alert("OK");
-					}else{
-						alert("BYE");
-						return;
+					if(mystatus == ""){
+						if(confirm(msg.from+"前來挑戰\r\n"+"是否接戰?")){
+							var message = { "from": "抹system茶","id": myID.innerHTML, "to": msg.id, "body": "OK" };
+							send(message);
+							mystatus = "connect";
+						}else{
+							var message = { "from": '抹system茶',"id": myID.innerHTML, "to": msg.id , "body": 'NO' };
+							send(message);
+							mystatus = "";
+							peer.disconnect();
+							console.log(peer.connections);
+							return;
+						}
+					}
+					if(mystatus == "try_connect"){
+						if(msg.from == "抹system茶"){
+							if(msg.body == "OK"){
+								mystatus = "connect";
+								return;
+							}
+							else{
+								mystatus = "";
+								alert("對方已拒絕");
+								return;
+							}
+						}
 					}
 					
 					//console.log(msg);
@@ -70,7 +99,22 @@ window.onload = function() {
                 });
             });
 			
-			peer.on('error', function(err) { alert(err)});
+			peer.on('error', function(err) { 
+			  
+			  switch(err.type){
+				  case "invalid-id":
+				  case "unavailable-id":
+				    peer = null;
+					alert("此暱稱已重複，不可用");
+					txtSelfId.focus();
+				  break;
+				  default:
+				    alert(err);
+				    peer = new Peer(hashCode(txtSelfId.value));
+				  break;
+			  }
+ 
+			});
 			
         }
     }
@@ -106,12 +150,38 @@ window.onload = function() {
         if (conn.open) {
             sendMessage(message);
         }
+		txtMsg.value = "";
     }
     
 	
 };
 
+function send(message){
+	
+	if (!conn) {
+            //创建到对方的连接
+            conn = peer.connect(message.to);
+            conn.on('open', () => {
+                //首次发送消息
+                sendMessage(message);
+            });
+        }
+ 
+        //发送消息
+        if (conn.open) {
+            sendMessage(message);
+        }
+}
+
 sendMessage = function (message) {
+	if(mystatus == "" && message.from != "抹system茶")
+		mystatus = "try_connect";
     conn.send(JSON.stringify(message));
-    msg_show.innerHTML = msg_show.innerHTML += "<div class='align_right'>" + message.from + " : " + message.body + "</div>";
+	if(message.from != "抹system茶")
+      msg_show.innerHTML = msg_show.innerHTML += "<div class='align_right'>" + message.from + " : " + message.body + "</div>";
+}
+
+function btnTest_click(event){
+	console.log(hashCode(txtSelfId.value));
+
 }
