@@ -9,18 +9,18 @@
 		
 		<link href="favicon.png" rel="icon">
 		<link rel="stylesheet" type="text/css" href="css/index.css?v=0011">
-		
 	</head>
 	<body >
 	
+
+	
 	<div style="text-align : center;">
-	  <h3>派對咖抹茶</h3>
+	  <a style = "font-size: 1.17em;">派對咖抹茶</a>
+	  <br/>
 	</div>
 	
-	
-	<div class="flex-align-title" style="text-align : center;max-height:50%;" >
-	<span>
-	
+	<div class="flex-align-title" style="text-align : center;height:40vh;max-height:40vh;overflow:auto;" >
+	<div style = "position: sticky;top: 0px;background-color: #000000;">
 	<span >
 	    <label>我方暱稱:</label>
 		<input id = "txtSelfId"></input>
@@ -28,7 +28,7 @@
 		<label>我方ID:</label>
 		<label id = "myID"></label>
 		<button id = "btnRegister" class="button" >想跳chacha</button>
-		<button id = "btnTest" class="button" style="display:none" >看看編碼</button>
+		<button id = "btnTest" class="button" style="display:none"  >測試</button>
 	</span>
 	<br/>
 	<span id = "opponent" style="display:none" >
@@ -38,28 +38,37 @@
 	  <div>
 	    <label>對手ID:</label>
 	    <input id = "txtTargetId" onkeyup="testNum()" maxlength="19" ></input>
+		<button id = "btnMatch" class="button" onclick="LetsBattle()">發起挑戰</button>
 	  </div>
-	  <label>發言  :</label>
-	  <input id = "txtMsg"></input>
-	  <button id = "btnSend" class="button" >發送</button>
+	  
 	</span>
+	</div>
 	
-	</span>
-	
-	<div id="msg_show">
-	  <div id = "games" style="text-align: left;display: none;align-items: center;">
+	<div id="msg_show" >
+	  <div id = "game_list" class = "hideIt"  style="text-align: left;align-items: center;">
 	    模式:
 		<a href = "#" onclick = "playGames(1)"><img src="images/fly3.jpg" class="btn_games" width="100" height="100" alt="1A2B" /></a>
 	    
 	  </div>
+	  
 	</div>
+	
 	</div>
 
+	<div style="text-align : center;height:50vh;max-height:50vh;overflow:auto;" >
+	  
+	  <div id = "div1">
+	  </div>
+	  <div id = "div2">
+	  </div>
+	  <div id = "talk" class = "hideIt" style="text-align : center;position: sticky; top: 50vh;">
+	  <label>發言  :</label>
+	  <input id = "txtMsg"></input>
+	  <button id = "btnSend" class="button" >發送</button>
+	  </div>
+	</div>
  
  
-	
-	
-	
 	
 	
 	<script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
@@ -68,6 +77,7 @@
 	<script type="text/javascript">
 	document.getElementById("btnTest").addEventListener('click',btnTest_click);
 	/*
+	class = "hideIt"
 	
 	document.getElementById("hint_guide").addEventListener('click',hint_guide_click);
 	document.getElementById("Handan").addEventListener('click',Handan_click);

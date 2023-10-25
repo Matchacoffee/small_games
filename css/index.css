@@ -1,8 +1,9 @@
 body {
-  min-height: 100%;
+  //min-height: 100%;
   top:0px;
   background-color : #000000;
   Color: #FFFFFF;
+  margin:0px;
 }
 .button {
   background-color: #4CAF50;
@@ -27,4 +28,15 @@ body {
 .flex-align-title span {
   text-align: left;
   display: inline-block;
+}
+.hideIt{
+	display:none;
+}
+ #div1
+{
+  float:left; background-color:red; width:70%;max-height:40%;
+}
+#div2
+{
+	background-color: Green; width:30%; float:right;max-height:40%;
 }

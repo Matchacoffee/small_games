@@ -9,7 +9,7 @@ var btnRegister = document.querySelector("button#btnRegister");
 var btnSend = document.querySelector("button#btnSend");
 var myID = document.getElementById("myID");
 var hisID = document.getElementById("hisID");
-var games = document.getElementById("games");
+
 
 let peer = null;
 let conn = null;
@@ -32,6 +32,11 @@ hashCode = function (str) {
 		result += data[i];
 	}
     return result;
+}
+
+function LetsBattle(){
+	var message = { "from": txtSelfId.value,"id": myID.innerHTML, "to": txtTargetId.value, "body": '野生的'+txtSelfId.value+'跳出來了' };
+	send(message);
 }
 
 window.onload = function() {
@@ -60,16 +65,24 @@ window.onload = function() {
             });
 			
             peer.on('connection', (conn) => {
-				console.log(peer.connections);
+				//console.log(peer.connections);
                 //收到对方消息的回调
                 conn.on('data', (data) => {
                     var msg = JSON.parse(data);
 					
+					try{
+						
+					}
+					finally{//就算try裡面return finally也會執行
+						
+					}
 					if(mystatus == "standby"){
 						if(confirm(msg.from+"前來挑戰\r\n「"+msg.body+"」\r\n是否接戰?")){
 							var message = { "from": "抹system茶","id": myID.innerHTML, "to": msg.id, "body": "OK" };
 							send(message);
 							mystatus = "connect_guest";
+							var talk = document.getElementById("talk");
+							talk.classList.remove('hideIt');
 						}else{
 							var message = { "from": '抹system茶',"id": myID.innerHTML, "to": msg.id , "body": 'NO' };
 							send(message);
@@ -83,9 +96,11 @@ window.onload = function() {
 						if(msg.from == "抹system茶"){
 							if(msg.body == "OK"){
 								mystatus = "connect_host";
-								console.log(games);
-								games.style.display  = "flex";
-								console.log(games);
+								var game_list = document.getElementById("game_list");
+								game_list.classList.remove('hideIt');
+								var talk = document.getElementById("talk");
+								talk.classList.remove('hideIt');
+								
 								return;
 							}
 							else{
@@ -202,7 +217,10 @@ sendMessage = function (message) {
 }
 
 function btnTest_click(event){
-	console.log(hashCode(txtSelfId.value));
+	//console.log(hashCode(txtSelfId.value));
+	for(var i=0;i<=10;i++){
+		msg_show.innerHTML = msg_show.innerHTML += "<div class='align_left'>系統提示 : " + i.toString() + " !</div>";
+	}
 }
 
 function testNum(){
