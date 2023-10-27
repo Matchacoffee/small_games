@@ -53,7 +53,7 @@ function LetsBattle(){
 window.onload = function() {
 	
 	 let connOption = { debug: 3 };
-	 
+	 database_Reset();
 	//register处理
     btnRegister.onclick = function () {
         if (!peer) {
@@ -203,6 +203,7 @@ window.onload = function() {
 									systemPanel.innerHTML += "第"+msg.times+"次:"+result[0]+"<font color='yellow'> "+result[1]+"</font>";
 									
 									answerRecord[result[0]] = result[1];
+									DealGuess(result[0],result[1]);
 									
 									if(result[1] == '4A0B'){//勝利 遊戲結束
 										document.getElementById('dialogconfirm_content').innerHTML = "獲得勝利<br/>要繼續下一局嗎?";
@@ -439,7 +440,6 @@ function database_Reset(){
             tmp++;
         }
     }
-	DealGuess('1354','0A0B');
 }
 
 function DealGuess(key,value){//處理當下這次就好
