@@ -12,7 +12,32 @@
 	</head>
 	<body >
 	
+	<dialog id = "msgShow">
+	  <div id = "msgShow_content"></div>
+	  <form method="dialog">
+		<button class = "button" onclick="window.location.reload()" >知道了</button>
+	  </form>
+	</dialog>
 	
+	<dialog id = "dialogconfirm">
+	  <div id = "dialogconfirm_content"></div>
+	  <form method="dialog">
+		<button class = "button" onclick="battleAgain()" >戰到天亮</button>
+		<button class = "button" onclick="snowflake()" >不玩了QAQ</button>
+		<button class = "button" onclick="" >不整理畫面</button>
+	  </form>
+	</dialog>
+	
+	<dialog id = "msgInput">
+	  <h4>準備開始</h4>
+	  <p>請輸入不重複4位數字</p>
+	  <input id = "msgInputTxt" maxlength="4" ></input>
+		<button class="button" onclick="game1A2B_CheckAnswer()" >確定</button>
+	</dialog>
+	
+	
+	
+		
 	<div style="text-align : center;">
 	  <a style = "font-size: 1.17em;">派對咖抹茶</a>
 	  <br/>
@@ -27,12 +52,12 @@
 		<label>我方ID:</label>
 		<label id = "myID"></label>
 		<button id = "btnRegister" class="button" >想跳chacha</button>
-		<button id = "btnTest" class="button" style="display:none"  >測試</button>
+		<button id = "btnTest"  class = "hideIt"   >測試</button>
 	</span>
 	<br/>
 	<span id = "opponent" style="display:none" >
 	  <div>
-	    <label id = "hisID">對手暱稱:暫無配對</label>
+	    對手暱稱:<label id = "hisID">暫無配對</label>
 	  </div>
 	  <div>
 	    <label>對手ID:</label>
@@ -54,27 +79,74 @@
 	
 	</div>
 
-	<div style="text-align : center;height:50vh;max-height:50vh;overflow:auto;" >
+	<div   style="text-align : center;height:50vh;" >
 	  
-	  <div id = "div1">
+	  <div id = "div1" class = "hideIt" >
+	    <div class="bounce" style = "position: sticky;top: 0px;background-color: rgba(100, 100, 100, 0.25);" >
+		  <label ><font color="yellow" id = "hint">
+		  </font></label>
+		  <details id = "details">
+		    <summary >對手紀錄</summary>
+		  </details>
+	    </div>
+	    <div id = "systemPanel" style="height:80%">
+
+		
+
+		</div>
+		
+		<div style="text-align : center;width: 100%;position: sticky; bottom: 0vh;background-color: rgba(100, 100, 100, 0.25);">
+		  <label class= "Guess" >猜 :</label>
+	      <input id = "txtGuess"  class= "Guess"  maxlength="4" ></input>
+	      <button id = "btnGuess" class="button Guess" >猜</button>  
+		</div>
 	  </div>
-	  <div id = "div2">
-	  </div>
-	  <div id = "talk" class = "hideIt" style="text-align : center;position: sticky; top: 50vh;">
-	  <label>發言  :</label>
-	  <input id = "txtMsg"></input>
-	  <button id = "btnSend" class="button" >發送</button>
+	  <div id = "div2" class = "hideIt">
+	    我方設定答案<br/>
+		<img id = "NoAnswer" src="images/NoAnswer.png" class="Answer"/>
+		<div id = "YesAnswer" style="display:none;">
+		  <img src="images/0.png" class="NoAnswer"/>
+		  <img src="images/0.png" class="NoAnswer"/>
+		  <img src="images/0.png" class="NoAnswer"/>
+		  <img src="images/0.png" class="NoAnswer"/>
+		</div>
+		<br/>
+	    有可能的數字<br/>
+		<img id = "guessNum0"  src="images/0.png" class="guessNum"/>
+		<img id = "guessNum1"  src="images/1.png" class="guessNum"/>
+		<img id = "guessNum2"  src="images/2.png" class="guessNum"/>
+		<img id = "guessNum3"  src="images/3.png" class="guessNum"/>
+		<img id = "guessNum4"  src="images/4.png" class="guessNum"/>
+		<img id = "guessNum5"  src="images/5.png" class="guessNum"/>
+		<img id = "guessNum6"  src="images/6.png" class="guessNum"/>
+		<img id = "guessNum7"  src="images/7.png" class="guessNum"/>
+		<img id = "guessNum8"  src="images/8.png" class="guessNum"/>
+		<img id = "guessNum9"  src="images/9.png" class="guessNum"/>
 	  </div>
 	</div>
- 
+	<div id = "talk" class = "hideIt" style="text-align : center;position: sticky; bottom: 0vh;">
+	    <label class= "chat">發言  :</label>
+	    <input id = "txtMsg" class= "chat" ></input>
+	    <button id = "btnSend" class="button chat" >發送</button>
+	</div>
 	
 	<script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
     <!-- <script  src="js/1.5.1_dist_peerjs.min.js"></script> -->
 	<script  src="js/script.js?v=003"></script>
 	<script type="text/javascript">
 	document.getElementById("btnTest").addEventListener('click',btnTest_click);
+	document.getElementById("txtGuess").addEventListener('keyup',txtGuess_keyup);
+	document.getElementById("msgInputTxt").addEventListener('keyup',txtGuess_keyup);
+	
+	document.getElementById("NoAnswer").addEventListener('click',click_Answer);
+	document.getElementById("YesAnswer").addEventListener('click',click_Answer);
+	
+	document.getElementById("btnGuess").addEventListener('click',btnGuess_click);
+	
+	//
 	/*
 	class = "hideIt"
+	onkeyup="testNum2(value)"
 	
 	document.getElementById("hint_guide").addEventListener('click',hint_guide_click);
 	document.getElementById("Handan").addEventListener('click',Handan_click);

@@ -1,9 +1,15 @@
+
 body {
   text-align : center;
   top:0px;
   background-color : #000000;
   Color: #FFFFFF;
-  margin:0px;
+  margin: 1px 10px 0px 10px;
+}
+dialog{
+  border: none;
+  box-shadow: 0 2px 6px #ccc;
+  border-radius: 10px;
 }
 .button {
   background-color: #4CAF50;
@@ -25,6 +31,9 @@ body {
 .align_left {
   text-align: left;
 }
+.align_center {
+  text-align: center;
+}
 .flex-align-title span {
   text-align: left;
   display: inline-block;
@@ -33,10 +42,116 @@ body {
 	display:none;
 }
  #div1
-{
-  float:left; background-color:red; width:70%;max-height:40%;
+{ 
+  float:left; 
+  background-color:rgba(100, 100, 100, 0.25);
+  width:70%;
+  height:45vh;
+  overflow:auto;
 }
 #div2
 {
-	background-color: Green; width:30%; float:right;max-height:40%;
+	background-color: rgba(200, 185, 70, 0.25);
+    width:30%; 
+	
+	float:right;
+	height:45vh;
+	overflow-y:auto;
 }
+.guessNum{
+	cursor: pointer;
+  }
+
+.chat{
+	font-size:18px;
+}
+.Answer{
+	width :50%;
+	cursor: pointer;
+}
+.NoAnswer{
+	width :22%;
+	cursor: pointer;
+}
+
+//動畫
+.bounce {
+  
+}
+
+.letter {
+  animation: bounce 0.75s cubic-bezier(0.05, 0, 0.2, 1) infinite alternate;
+  display: inline-block;
+  transform: translate3d(0, 0, 0);
+  margin-top: 0.5em;
+  text-shadow: rgba(255, 255, 255, 0.4) 0 0 0.05em;
+  //font: normal 500 6rem 'Varela Round', sans-serif;
+}
+.letter:nth-child(1) {
+  animation-delay: 0s;
+}
+.letter:nth-child(2) {
+  animation-delay: 0.0333333333s;
+}
+.letter:nth-child(3) {
+  animation-delay: 0.1333333333s;
+}
+.letter:nth-child(4) {
+  animation-delay: 0.2333333333s;
+}
+.letter:nth-child(5) {
+  animation-delay: 0.3333333333s;
+}
+.letter:nth-child(6) {
+  animation-delay: 0.4333333333s;
+}
+.letter:nth-child(7) {
+  animation-delay: 0.5333333333s;
+}
+.letter:nth-child(8) {
+  animation-delay: 0.6333333333s;
+}
+.letter:nth-child(9) {
+  animation-delay: 0.7333333333s;
+}
+.letter:nth-child(10) {
+  animation-delay: 0.8333333333s;
+}
+.letter:nth-child(11) {
+  animation-delay: 0.9333333333s;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translate3d(0, 0, 0);
+    text-shadow: rgba(255, 255, 255, 0.4) 0 0 0.05em;
+  }
+  100% {
+    transform: translate3d(0, -1em, 0);
+    text-shadow: rgba(255, 255, 255, 0.4) 0 1em 0.35em;
+  }
+}
+
+//動畫
+
+/* ===================================
+   RWD
+   ===================================*/
+@media screen and (max-width:1000px) {
+	:root {
+	  --side_fontsize: 35px;
+	}
+  .guessNum{
+	  width : 50px;
+	  //cursor: help;
+  }
+
+}
+@media screen and (max-width:400px) {
+  
+  .Guess{
+	  font-size:12px;
+  }
+}
+
+
