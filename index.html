@@ -67,8 +67,13 @@
 	  
 	</span>
 	</div>
-	
+	<div id = "talk" class = "hideIt" style="text-align : center;">
+			<label class= "chat">發言  :</label>
+			<input id = "txtMsg" class= "chat" ></input>
+			<button id = "btnMsgSend" class="button chat" >發送</button>
+		</div>
 	<div id="msg_show" >
+		
 	  <div id = "game_list" class = "hideIt"  style="text-align: left;align-items: center;">
 	    模式:
 		<a href = "#" onclick = "playGames(1)"><img src="images/fly3.jpg" class="btn_games" width="100" height="100" alt="1A2B" /></a>
@@ -79,7 +84,7 @@
 	
 	</div>
 
-	<div   style="text-align : center;height:50vh;" >
+	<div  style="text-align : center;height:50vh;" >
 	  
 	  <div id = "div1" class = "hideIt" >
 	    <div class="bounce" style = "position: sticky;top: 0px;background-color: rgba(100, 100, 100, 0.25);" >
@@ -124,11 +129,7 @@
 		<img id = "guessNum9"  src="images/9.png" class="guessNum"/>
 	  </div>
 	</div>
-	<div id = "talk" class = "hideIt" style="text-align : center;position: sticky; bottom: 0vh;">
-	    <label class= "chat">發言  :</label>
-	    <input id = "txtMsg" class= "chat" ></input>
-	    <button id = "btnSend" class="button chat" >發送</button>
-	</div>
+	
 	
 	<script src="https://unpkg.com/peerjs@1.5.1/dist/peerjs.min.js"></script>
     <!-- <script  src="js/1.5.1_dist_peerjs.min.js"></script> -->

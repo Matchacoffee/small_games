@@ -6,7 +6,7 @@ var txtSelfId = document.querySelector("input#txtSelfId");
 var txtTargetId = document.querySelector("input#txtTargetId");
 var txtMsg = document.querySelector("input#txtMsg");
 var btnRegister = document.querySelector("button#btnRegister");
-var btnSend = document.querySelector("button#btnSend");
+
 var myID = document.getElementById("myID");
 var hisID = document.getElementById("hisID");
 var msgInput = document.getElementById("msgInput");
@@ -51,7 +51,6 @@ function LetsBattle(){
 }
 
 window.onload = function() {
-	
 	 let connOption = { debug: 3 };
 	 database_Reset();
 	//register处理
@@ -200,7 +199,7 @@ window.onload = function() {
 								  case 'ReplyAnswer':
 								    var systemPanel  = document.getElementById("systemPanel");
 									var result = msg.data.split(',');
-									systemPanel.innerHTML += "第"+msg.times+"次:"+result[0]+"<font color='yellow'> "+result[1]+"</font>";
+									systemPanel.innerHTML += "<p>第"+msg.times+"次:"+result[0]+"<font color='yellow'> "+result[1]+"</font></p>";
 									
 									answerRecord[result[0]] = result[1];
 									DealGuess(result[0],result[1]);
@@ -253,7 +252,11 @@ window.onload = function() {
         }
     }
 	//发送消息处理
-    btnSend.onclick = function () {
+    document.getElementById("btnMsgSend").addEventListener('click',btnMsgSend_click);
+  
+};
+
+function btnMsgSend_click(event){
         //消息体
         var message = { "from": txtSelfId.value,"id": myID.innerHTML, "to": txtTargetId.value, "body": txtMsg.value };
 		
@@ -285,10 +288,7 @@ window.onload = function() {
             sendMessage(message);
         }
 		txtMsg.value = "";
-    }
-    
-	
-};
+}
 
 function send(message){
 	
@@ -316,23 +316,8 @@ sendMessage = function (message) {
 }
 
 function btnTest_click(event){
-	console.log(answerRecord);
-	var QQ = "1234,1A3B";
-	var result = QQ.split(',');
-	answerRecord[result[0]] = result[1];
-	QQ = "1784,1A3B";
-	result = QQ.split(',');
-	answerRecord[result[0]] = result[1];
-	/*for(var i = 0; i < Object.keys(answerRecord).length; i++) {
-     console.log (Object.keys(answerRecord)[i], Object.values(answerRecord)[i]); 
-    }*/
-	for (const [key, value] of Object.entries(answerRecord)) 
-	{
-	  console.log(key, value);
-	} 
-	
-	console.log(answerRecord);
-	database_Reset();
+	var talk = document.getElementById("talk");
+							talk.classList.remove('hideIt');
 	return;
 	for(var i=0;i<=10;i++){
 		msg_show.innerHTML = msg_show.innerHTML += "<div class='align_left'>系統提示 : " + i.toString() + " !</div>";
@@ -443,6 +428,7 @@ function database_Reset(){
 }
 
 function DealGuess(key,value){//處理當下這次就好
+    console.log(key+value);
     var index = 0,numIndex = 0;
 	var newDatabase = [];
 	var newNum = [];
@@ -468,7 +454,7 @@ function DealGuess(key,value){//處理當下這次就好
 	//不顯示
 	for(i=0;i<10;i++){
 		if(database_num.indexOf(i.toString()) == -1)
-		  document.getElementById('guessNum'+i.toString()).classList.remove("hideIt");
+		  document.getElementById('guessNum'+i.toString()).classList.add("hideIt");
 	}
 }
 
