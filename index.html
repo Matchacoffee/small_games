@@ -72,7 +72,7 @@
 			<input id = "txtMsg" class= "chat" ></input>
 			<button id = "btnMsgSend" class="button chat" >發送</button>
 		</div>
-	<div id="msg_show" >
+	<div id="msg_show" style="margin: 1px 15px 0px 15px;" >
 		
 	  <div id = "game_list" class = "hideIt"  style="text-align: left;align-items: center;">
 	    模式:
@@ -87,7 +87,7 @@
 	<div  style="text-align : center;height:50vh;" >
 	  
 	  <div id = "div1" class = "hideIt" >
-	    <div class="bounce" style = "position: sticky;top: 0px;background-color: rgba(100, 100, 100, 0.25);" >
+	    <div class="bounce" style = "position: sticky;top: 0px;background-color: rgba(100, 100, 100, 1);" >
 		  <label ><font color="yellow" id = "hint">
 		  </font></label>
 		  <details id = "details">
@@ -96,11 +96,10 @@
 	    </div>
 	    <div id = "systemPanel" style="height:80%">
 
-		
 
 		</div>
 		
-		<div style="text-align : center;width: 100%;position: sticky; bottom: 0vh;background-color: rgba(100, 100, 100, 0.25);">
+		<div style="text-align : center;width: 100%;position: absolute; bottom: 0px;background-color: rgba(100, 100, 100, 0.25);">
 		  <label class= "Guess" >猜 :</label>
 	      <input id = "txtGuess"  class= "Guess"  maxlength="4" ></input>
 	      <button id = "btnGuess" class="button Guess" >猜</button>  
